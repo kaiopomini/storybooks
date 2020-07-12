@@ -1,0 +1,15 @@
+{
+  "name": "storybooks",
+  "version": "1.0.0",
+  "description": "React app to share public or write private stories",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Kaio Pomini",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.23"
+  }
+}
