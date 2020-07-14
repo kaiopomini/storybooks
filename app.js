@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
 
+require('dotenv').config()
+
 // Passport config
 require('./config/passport')(passport)
 
