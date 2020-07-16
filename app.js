@@ -4,7 +4,7 @@ const passport = require('passport')
 
 require('dotenv').config()
 
-// Passport config
+// Passport Config
 require('./config/passport')(passport)
 
 // Load Routes
