@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
 
-// To put keys from heroku environment and hide on github
+// To Put Keys From Heroku Environment and Hide on Github
 require('dotenv').config()
 
 // Passport Config
