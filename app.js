@@ -1,8 +1,11 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
+const _handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 // Load user model
 require('./models/User')
@@ -15,6 +18,7 @@ require('dotenv').config()
 require('./config/passport')(passport)
 
 // Load Routes
+const index = require('./routes/index')
 const auth = require('./routes/auth')
 
 
@@ -23,7 +27,7 @@ mongoose.Promise = global.Promise
 // Mongoose connect
 mongoose.connect(process.env.MONGO, {
   useNewUrlParser: true,
-   useUnifiedTopology: true
+  useUnifiedTopology: true
 })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err))
@@ -31,9 +35,12 @@ mongoose.connect(process.env.MONGO, {
 
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('It Works')
-})
+// Handlebars middleware 
+app.engine('handlebars', exphbs({
+  handlebars: allowInsecurePrototypeAccess(_handlebars),
+  defaultLayout:'main'
+}))
+app.set('view engine', 'handlebars')
 
 // **need to be above of routes**
 app.use(cookieParser())
@@ -49,14 +56,13 @@ app.use(passport.session())
 
 // Set global variables
 app.use((req, res, next) => {
-  res.locals.user = req.user || null
+  res.locals.user = req.user || null;
   next()
 })
 
 // use Routes
+app.use('/', index)
 app.use('/auth', auth)
-
-
 
 
 const port = process.env.PORT || 5000
