@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -8,8 +9,9 @@ const passport = require('passport')
 const _handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
-// Load user model
+// Load models
 require('./models/User')
+require('./models/Story')
 
 
 // To Put Keys From Heroku Environment and Hide on Github 
@@ -23,6 +25,12 @@ const index = require('./routes/index')
 const auth = require('./routes/auth')
 const stories = require('./routes/stories')
 
+// Handlebars helpers
+const {
+  truncate,
+  stripTags,
+  formatDate
+} = require('./helpers/hbs')
 
 //Map global promises
 mongoose.Promise = global.Promise
@@ -37,9 +45,18 @@ mongoose.connect(process.env.MONGO, {
 
 const app = express()
 
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 // Handlebars middleware 
 app.engine('handlebars', exphbs({
   handlebars: allowInsecurePrototypeAccess(_handlebars),
+    helpers: {
+      truncate: truncate,
+      stripTags: stripTags,
+      formatDate: formatDate
+    },
   defaultLayout:'main'
 }))
 app.set('view engine', 'handlebars')
