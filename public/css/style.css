@@ -2,6 +2,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+
 }
 
 main {
@@ -14,4 +15,20 @@ main {
 
 footer{
   margin-top: 20px;
+}
+
+.story-text {
+  height: 120px;
+}
+.card {
+  min-height: 340px;
+  min-width: 220px;
+  max-width: 430px;
+}
+
+.dash-status{
+  text-transform: capitalize;
+}
+#delete-form{
+  display: inline;
 }
