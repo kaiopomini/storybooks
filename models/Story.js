@@ -23,11 +23,11 @@ const StorySchema = new Schema({
     default: true
   },
   comments: [{
-    commentsBody: {
+    commentBody: {
       type: String,
       required: true
     },
-    commentsDate: {
+    commentDate: {
       type: Date,
       default: Date.now
     },
