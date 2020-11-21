@@ -147,7 +147,10 @@ router.put('/:id', (req, res) => {
 
 // DELETE story
 router.delete('/:id', (req, res) => {
-  res.send('delete')
+  Story.remove({_id: req.params.id})
+    .then(() => {
+      res.redirect('/dashboard')
+    })
 })
 
 // Add comment
